@@ -6,8 +6,9 @@ app = FastAPI(
     title="TCG Price Tracker API",
     description="An API for tracking TCG booster box prices and EV calculations",
     version="1.0",
-    docs_url="/docs",  # Manually setting Swagger UI route
-    redoc_url="/redoc",  # Enables alternative API docs
+    docs_url="/docs",  # Enable Swagger UI
+    redoc_url="/redoc",  # Enable ReDoc UI
+    openapi_url="/openapi.json"  # Ensure OpenAPI schema is available
 )
 
 # Connect to PostgreSQL using the Render database URL
