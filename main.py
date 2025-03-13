@@ -82,10 +82,29 @@ def update_card_price(set_name, card_name):
     
     return {"error": "Price not found"}
 
+# Function to fetch latest sales data from TCGPlayer API
+def fetch_tcgplayer_sales(tcg_id):
+    url = f"https://mpapi.tcgplayer.com/v2/product/{tcg_id}/latestsales"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
+
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code == 200:
+        return response.json()
+    return {"error": "Could not fetch sales data"}
+
 # API route to fetch & store card prices from Card Kingdom API
 @app.get("/fetch-card-price/{set_name}/{card_name}")
 def fetch_card_price_route(set_name: str, card_name: str):
     return update_card_price(set_name, card_name)
+
+# API route to fetch latest sales data from TCGPlayer
+@app.get("/fetch-tcg-sales/{tcg_id}")
+def fetch_sales_route(tcg_id: int):
+    return fetch_tcgplayer_sales(tcg_id)
 
 # Home endpoint
 @app.get("/")
